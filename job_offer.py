@@ -7,12 +7,9 @@ Created on Sun Jul  7 17:48:28 2019
 
 class job_offer:
     import re
-    
-    col_list=['report','link','creator','localization','price','price_m3','level','title','size','type_of_building','market','type_of_creator']
-    
-    page=''
-    
+          
     def __init__(self):
+        self.id = ""
         self.report = ""
         self.link = ""
         self.creator = ""
@@ -38,7 +35,16 @@ class job_offer:
         self.availability = ""
         self.windows = ""
         self.warming = ""
+        self.description = ""
+        self.offer_display = ""
+        self.offer_added = ""
+        self.additional_info = ""
         
+    def set_id(self,value):
+        self.id=str(value)
+        
+    def get_id(self):
+        return self.id
 
     def set_report(self,value):
         self.report=value
@@ -71,7 +77,7 @@ class job_offer:
         return self.isFurnished
       
     def set_localization(self,value):
-        self.localization=value
+        self.localization=value.replace('\n','').replace('\r','').replace('\t','')
        
     def get_localization(self):
         return self.localization
@@ -178,16 +184,42 @@ class job_offer:
        
     def get_year(self):
         return self.year  
+ 
+    
+    def set_additional_info(self,value):
+        self.additional_info=value
+       
+    def get_additional_info(self):
+        return self.additional_info
+    
+    def set_description(self,value):
+        self.description=value.replace('\n','').replace('\r','').replace(';',',')
+       
+    def get_description(self):
+        return self.description  
+    
+    def set_offer_display(self,value):
+        self.offer_display=value
+       
+    def get_offer_display(self):
+        return self.offer_display  
+
+
+    def set_offer_added(self,value):
+        self.offer_added=value.replace('\n','').replace('\r','').replace('\t','')
+       
+    def get_offer_added(self):
+        return self.offer_added
     
     def get_complete_list(self):
-        list=[self.link,self.report,self.creator,self.level,self.isFurnished,self.numOfRooms,
+        list=[self.id,self.link,self.report,self.creator,self.level,self.isFurnished,self.numOfRooms,
               self.localization,self.price,self.price_m3,self.title,self.size,
               self.type_of_building,self.market,self.type_of_creator, self.numOfLevels,
               self.material,self.finish, self.rent,self.ownership, self.availability,
-              self.windows,self.warming,self.year]
+              self.windows,self.warming,self.year,self.description,self.offer_display,
+              self.offer_added,self.additional_info]
         return list       
-        
-        
+            
     def find_tagOLX(self,first_part, second_part):
         if(first_part == "Oferta od"):
             self.set_creator(second_part)
